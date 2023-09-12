@@ -13,13 +13,13 @@ jobs:
         with:
           submodules: recursive
       - name: Produce shortened sha
-        run: echo "SHA7=$(echo $(cd e3sm; git log --oneline  | head -n1 | cut -c1-7))" >> $GITHUB_ENV
+        run: echo "SHA7=$(echo $(cd scream; git log --oneline  | head -n1 | cut -c1-7))" >> $GITHUB_ENV
       - name: Patch the code
         if: contains(github.ref, 'patch')
         run: |
             export PATCH=$(echo ${{ github.ref }} | cut -d'-' -f4)
             echo "PATCH=${PATCH}" >> $GITHUB_ENV
-            cd e3sm
+            cd scream
             for this_patch in $(ls ../plus/${SHA7}/${PATCH}/*.patch); do
               echo "Applying patch ${this_patch}"
               git apply --index ${this_patch} -v
